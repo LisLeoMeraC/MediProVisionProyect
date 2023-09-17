@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +13,7 @@ import com.example.mediprovision.R;
 import java.util.List;
 
 public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomViewHolder> {
-    private List<Symptom> symptoms;
+    private final List<Symptom> symptoms;
 
     public SymptomAdapter(List<Symptom> symptoms) {
         this.symptoms = symptoms;
@@ -31,8 +30,6 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
     public void onBindViewHolder(@NonNull SymptomViewHolder holder, int position) {
         Symptom symptom = symptoms.get(position);
         holder.symptomNameEditText.setText(symptom.getName());
-        holder.symptomDescriptionEditText.setText(symptom.getDescription());
-        holder.symptomDateEditText.setText(symptom.getDate());
     }
 
     @Override
@@ -41,15 +38,11 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
     }
 
     public static class SymptomViewHolder extends RecyclerView.ViewHolder {
-        EditText symptomNameEditText;
-        EditText symptomDescriptionEditText;
-        EditText symptomDateEditText;
-
+        final EditText symptomNameEditText;
         public SymptomViewHolder(@NonNull View itemView) {
             super(itemView);
             symptomNameEditText = itemView.findViewById(R.id.symptomNameEditText);
-            symptomDescriptionEditText = itemView.findViewById(R.id.symptomDescriptionEditText);
-            symptomDateEditText = itemView.findViewById(R.id.symptomDateEditText);
         }
     }
 }
+
