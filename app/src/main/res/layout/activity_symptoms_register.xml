@@ -33,6 +33,27 @@
             android:hint="Nombre y apellido del paciente"
             android:enabled="false" />
 
+        <EditText
+            android:id="@+id/titleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titulo del diagnostico"
+            android:enabled="true" />
+
+        <EditText
+            android:id="@+id/weightEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="weight"
+            android:enabled="true" />
+
+        <EditText
+            android:id="@+id/heightEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="height"
+            android:enabled="true" />
+
         <!-- RecyclerView para síntomas -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/symptomsRecyclerView"

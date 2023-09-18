@@ -1,6 +1,8 @@
 package com.example.mediprovision;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -102,8 +104,21 @@ public class login extends AppCompatActivity {
                                     intent = new Intent(login.this, RegisterUser.class);
                                 } else {
                                     intent = new Intent(login.this, Home.class);
+                                    // En tu actividad de inicio de sesión, después de obtener el objeto JSON
+                                    int id = 0;
+                                    try {
+                                        id = jsonObject.getJSONObject("Detalle").getInt("id");
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putInt("UserId", id);
+                                    editor.apply();
+
                                 }
                                 startActivity(intent);
+
                             });
                         } else {
                             runOnUiThread(() -> Toast.makeText(login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show());

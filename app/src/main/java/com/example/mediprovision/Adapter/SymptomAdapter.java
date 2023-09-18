@@ -1,5 +1,7 @@
 package com.example.mediprovision.Adapter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,15 @@ import java.util.List;
 
 public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomViewHolder> {
     private final List<Symptom> symptoms;
+    private final OnSymptomListener onSymptomListener;
 
-    public SymptomAdapter(List<Symptom> symptoms) {
+    public interface OnSymptomListener {
+        void onSymptomNameChanged(int position, String newText);
+    }
+
+    public SymptomAdapter(List<Symptom> symptoms, OnSymptomListener onSymptomListener) {
         this.symptoms = symptoms;
+        this.onSymptomListener = onSymptomListener;
     }
 
     @NonNull
@@ -27,9 +35,29 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SymptomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SymptomViewHolder holder, int position) {
         Symptom symptom = symptoms.get(position);
         holder.symptomNameEditText.setText(symptom.getName());
+
+        holder.symptomNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Empty on purpose
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Empty on purpose
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int actualPosition = holder.getAdapterPosition();
+                if (actualPosition != RecyclerView.NO_POSITION) {
+                    onSymptomListener.onSymptomNameChanged(actualPosition, s.toString());
+                }
+            }
+        });
     }
 
     @Override
@@ -39,10 +67,10 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
 
     public static class SymptomViewHolder extends RecyclerView.ViewHolder {
         final EditText symptomNameEditText;
+
         public SymptomViewHolder(@NonNull View itemView) {
             super(itemView);
             symptomNameEditText = itemView.findViewById(R.id.symptomNameEditText);
         }
     }
 }
-
