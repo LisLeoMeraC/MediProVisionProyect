@@ -24,10 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -50,8 +53,8 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
 
     private EditText titleEditText, dateEditText, weightEditText, heightEditText;
     private Button  addSymptomButton, submitReportButton;
-    private int pacienteId=1;  // Dummy data
-    private int doctorId=12;   // Dummy data
+    private int pacienteId;
+    private int doctorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +70,8 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
 
 
         titleEditText = findViewById(R.id.titleEditText);
-       // dateEditText = findViewById(R.id.dateEditText);
         weightEditText = findViewById(R.id.weightEditText);
         heightEditText = findViewById(R.id.heightEditText);
-
-
-
 
         // Botón para añadir un nuevo síntoma
         Button addSymptomButton = findViewById(R.id.addSymptomButton);
@@ -85,7 +84,10 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
         Button submitReportButton = findViewById(R.id.submitReportButton);
         submitReportButton.setOnClickListener(v -> {
             String titulo = titleEditText.getText().toString();
-            String fecha = "2021-05-12";
+
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String fecha = dateFormat.format(calendar.getTime());
             String peso = weightEditText.getText().toString();
             String altura = heightEditText.getText().toString();
 
@@ -98,7 +100,10 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
             }
 
             SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-            int doctorId = sharedPreferences.getInt("UserId", -1);
+            int doctorId = sharedPreferences.getInt("idDoctor", 0);
+
+            SharedPreferences sharedPreferencesPatient = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+            int pacienteId = sharedPreferencesPatient.getInt("idPatient", 0);
 
             // Crear el objeto JSON para enviar
             JSONObject payload = new JSONObject();
@@ -179,9 +184,6 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
         });
     }
 
-
-
-
     // Implementar la función de la interfaz OnSymptomListener
     @Override
     public void onSymptomNameChanged(int position, String newText) {
@@ -220,6 +222,16 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
                             final String name = jsonObject.getString("name");
                             final String lastName = jsonObject.getString("lastName");
 
+
+                            JSONObject detalle = jsonObject.optJSONObject("Detalle");
+                            if (detalle != null) {
+                                int idPatient = detalle.optInt("idPatient", -1);
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putInt("idPatient", idPatient);
+                                editor.apply();
+                            }
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -243,6 +255,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
                             }
                         });
                     }
+
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -253,5 +266,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
                 }
             }
         });
+
+
     }
 }

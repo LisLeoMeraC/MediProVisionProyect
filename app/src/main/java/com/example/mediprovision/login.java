@@ -99,22 +99,24 @@ public class login extends AppCompatActivity {
                             runOnUiThread(() -> {
                                 Intent intent;
                                 if (isDoctor) {
-                                    intent = new Intent(login.this, MainActivity.class);
-                                } else if (isPatient) {
-                                    intent = new Intent(login.this, RegisterUser.class);
-                                } else {
                                     intent = new Intent(login.this, Home.class);
-                                    // En tu actividad de inicio de sesión, después de obtener el objeto JSON
-                                    int id = 0;
+                                    // ... código anterior
+                                    int idDoctor = 0;
                                     try {
-                                        id = jsonObject.getJSONObject("Detalle").getInt("id");
+                                        idDoctor = jsonObject.getJSONObject("Detalle").optInt("idDoctor");
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);
                                     }
                                     SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putInt("UserId", id);
+                                    editor.putInt("idDoctor", idDoctor);
                                     editor.apply();
+// ... código posterior
+
+                                } else if (isPatient) {
+                                    intent = new Intent(login.this, RegisterUser.class);
+                                } else {
+                                    intent = new Intent(login.this, MainActivity.class);
 
                                 }
                                 startActivity(intent);
