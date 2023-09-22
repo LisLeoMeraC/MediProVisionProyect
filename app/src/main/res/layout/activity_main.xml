@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/welcomeTextView"
         android:layout_marginTop="20dp"
-        android:text="Iniciar Sesión"
+        android:text="Log in"
         android:backgroundTint="#4CAF50"
         android:textColor="#FFFFFF" />
 
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/loginButton"
         android:layout_marginTop="10dp"
-        android:text="Registrarse"
+        android:text="Register"
         android:backgroundTint="#FFC107"
         android:textColor="#FFFFFF" />
 
@@ -64,7 +64,7 @@
             android:id="@+id/termsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Términos y Condiciones"
+            android:text="Terms and Conditions"
             android:textSize="12sp"
             android:textColor="#888888" />
 
@@ -76,7 +76,7 @@
             android:id="@+id/privacyTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Política de Privacidad"
+            android:text="Privacy Policy"
             android:textSize="12sp"
             android:textColor="#888888" />
 

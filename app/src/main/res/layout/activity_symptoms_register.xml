@@ -10,50 +10,71 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/title2TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Diagnosis"
+            android:textSize="24sp"
+            android:textColor="#4CAF50"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
+
         <!-- Detalles del informe -->
         <EditText
             android:id="@+id/cedulaEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Número de cédula" />
+            android:hint="ID card number" />
 
         <Button
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFC107"
-            android:text="Buscar" />
+            android:text="Search" />
 
         <!-- Nombre y apellido del paciente (deshabilitado) -->
         <EditText
             android:id="@+id/patientNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre y apellido del paciente"
+            android:hint="Patient's first and last name"
             android:enabled="false" />
 
         <EditText
             android:id="@+id/titleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Titulo del diagnostico"
+            android:hint="Title of diagnosis"
             android:enabled="true" />
 
         <EditText
             android:id="@+id/weightEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="weight"
+            android:hint="Weight"
             android:enabled="true" />
 
         <EditText
             android:id="@+id/heightEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="height"
+            android:hint="Height"
             android:enabled="true" />
 
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Symptoms"
+            android:textSize="24sp"
+            android:textColor="#4CAF50"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
         <!-- RecyclerView para síntomas -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/symptomsRecyclerView"
@@ -67,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#4CAF50"
-            android:text="Agregar síntoma" />
+            android:text="Add another symptom" />
 
         <!-- Botón para enviar el informe -->
         <Button
@@ -75,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#4CAF50"
-            android:text="Enviar informe" />
+            android:text="Send report" />
 
     </LinearLayout>
 </ScrollView>

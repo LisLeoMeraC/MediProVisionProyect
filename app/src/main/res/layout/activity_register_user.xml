@@ -37,14 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="Paciente" />
+                android:text="Patient" />
 
             <RadioButton
                 android:id="@+id/doctorRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="Profesional Médico" />
+                android:text="Doctor" />
 
         </RadioGroup>
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:hint="Nombres"
+            android:hint="Names"
             android:enabled="false"/>
 
         <EditText
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:hint="Apellidos"
+            android:hint="Last names"
             android:enabled="false"/>
 
         <EditText
@@ -72,14 +72,14 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:hint="Nro de Identidad"
+            android:hint="Identity Number"
             android:enabled="false"/>
 
         <EditText
             android:id="@+id/birthDateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha de Nacimiento"
+            android:hint="Date of Birth"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:inputType="date"
@@ -89,7 +89,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seleccione su género"
+            android:text="Select your gender"
             android:textSize="16sp"
             android:textColor="#000000"
             android:layout_marginStart="4dp"
@@ -114,14 +114,14 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:hint="Dirección Domicilio"
+            android:hint="Adreess"
             android:enabled="false"/>
 
         <EditText
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Teléfono"
+            android:hint="CellPhone"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:inputType="phone"
@@ -141,7 +141,7 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="Password"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:inputType="textPassword"
@@ -152,7 +152,7 @@
             android:id="@+id/specialtyEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Especialidad Médica"
+            android:hint="Medical Specialty"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:visibility="gone" /> <!-- Inicialmente oculto -->
@@ -161,7 +161,7 @@
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descripción"
+            android:hint="Description"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:visibility="gone" />
@@ -172,7 +172,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Registrarte"
+            android:text="Register"
             android:backgroundTint="#4CAF50"
             android:textColor="#FFFFFF"
             android:enabled="false"/>

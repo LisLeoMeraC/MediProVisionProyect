@@ -12,7 +12,7 @@
         android:id="@+id/titleTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Modulo Diagnostico"
+        android:text="Diagnostic Module"
         android:textSize="24sp"
         android:textColor="#4CAF50"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Historial de Diagnósticos"
+        android:text="Diagnostic History"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="20dp" />
@@ -40,7 +40,7 @@
         android:id="@+id/addNewDiagnosisButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrar Nuevo Diagnóstico"
+        android:text="Register New Diagnosis"
         android:backgroundTint="#4CAF50"
         android:textColor="#FFFFFF" />
 

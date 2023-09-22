@@ -47,7 +47,7 @@ public class diagnosticoPatient extends AppCompatActivity {
 
     private void fetchPatientData(String idCard) {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://predictiondisease-f9c214677cde.herokuapp.com/api/findRecordPatient?idCard=" + idCard;
+        String url = "https://predictiondisease-f9c214677cde.herokuapp.com/api/findRecordPatient?idPatient=" + idCard;
 
         Request request = new Request.Builder()
                 .url(url)
@@ -66,10 +66,8 @@ public class diagnosticoPatient extends AppCompatActivity {
                 } else {
                     String jsonData = response.body().string();
 
-
                     Gson gson = new Gson();
                     PatientData patientData = gson.fromJson(jsonData, PatientData.class);
-
 
                     runOnUiThread(new Runnable() {
                         @Override

@@ -51,7 +51,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Diagnóstico"
+                        android:text="Diagnosis"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="10dp" />
@@ -59,7 +59,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Realiza un nuevo diagnostico"
+                        android:text="Performs a new diagnosis"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -97,7 +97,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Seguimiento de Tratamiento"
+                        android:text="Treatment Follow-up"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="10dp" />
@@ -105,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Monitorea el progreso de tu tratamiento médico."
+                        android:text="Monitor the progress of your medical treatment."
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -151,7 +151,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Revisa tus citas pendientes."
+                        android:text="Check your pending appointments."
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -189,7 +189,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Perfil"
+                        android:text="Profile"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="10dp" />
@@ -197,7 +197,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Administra tu información personal y médica"
+                        android:text="Manage your personal and medical information"
                         android:textSize="16sp" />
 
                 </LinearLayout>
