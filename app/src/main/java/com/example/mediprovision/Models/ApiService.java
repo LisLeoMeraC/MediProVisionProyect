@@ -1,4 +1,4 @@
-package com.example.mediprovision;
+package com.example.mediprovision.Models;
 
 import com.example.mediprovision.Models.SymptomRequestBody;
 

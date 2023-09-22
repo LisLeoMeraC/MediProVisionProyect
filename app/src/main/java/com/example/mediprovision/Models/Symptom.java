@@ -1,6 +1,7 @@
 package com.example.mediprovision.Models;
 
 public class Symptom {
+    private int id;
     private String name;
 
     // Constructor
@@ -18,7 +19,13 @@ public class Symptom {
         this.name = name;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
@@ -26,4 +33,6 @@ public class Symptom {
                 "name='" + name +
                 '}';
     }
+
+
 }

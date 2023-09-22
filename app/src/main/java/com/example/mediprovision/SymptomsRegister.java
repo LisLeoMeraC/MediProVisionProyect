@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mediprovision.Adapter.SymptomAdapter;
+import com.example.mediprovision.Models.PostRequestCallback;
 import com.example.mediprovision.Models.Symptom;
 
 import org.json.JSONArray;
@@ -61,10 +65,10 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_symptoms_register);
 
-        // Inicializar RecyclerView
+
         RecyclerView symptomsRecyclerView = findViewById(R.id.symptomsRecyclerView);
         symptomsList = new ArrayList<>();
-        adapter = new SymptomAdapter(symptomsList, this);  // No te olvides de pasar 'this' para implementar OnSymptomListener
+        adapter = new SymptomAdapter(symptomsList, this);
         symptomsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         symptomsRecyclerView.setAdapter(adapter);
 
@@ -73,7 +77,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
         weightEditText = findViewById(R.id.weightEditText);
         heightEditText = findViewById(R.id.heightEditText);
 
-        // Botón para añadir un nuevo síntoma
+
         Button addSymptomButton = findViewById(R.id.addSymptomButton);
         addSymptomButton.setOnClickListener(v -> {
             symptomsList.add(new Symptom(""));
@@ -101,9 +105,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
 
             SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
             int doctorId = sharedPreferences.getInt("idDoctor", 0);
-
-            SharedPreferences sharedPreferencesPatient = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-            int pacienteId = sharedPreferencesPatient.getInt("idPatient", 0);
+            int pacienteId = sharedPreferences.getInt("id", 0);
 
             // Crear el objeto JSON para enviar
             JSONObject payload = new JSONObject();
@@ -120,7 +122,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
             }
 
             Log.d("JSON Payload", payload.toString());
-            makePostRequest("https://predictiondisease-f9c214677cde.herokuapp.com/api/registerSymptom", payload);
+            makePostRequest("https://predictiondisease-f9c214677cde.herokuapp.com/api/registerSymptom", payload, this);
         });
 
         // Inicializar campos y botones adicionales
@@ -150,13 +152,11 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
     }
 
 
-    private void makePostRequest(String url, JSONObject jsonPayload) {
+    private void makePostRequest(String url, JSONObject jsonPayload, Context context) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
         RequestBody body = RequestBody.create(JSON, jsonPayload.toString());
-
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
@@ -173,6 +173,16 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
                     Log.d("OKHttp", responseData);
+
+                    // Realizar acciones en el thread principal
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        // Mostrar el Toast
+                        Toast.makeText(context, "Diagnóstico registrado", Toast.LENGTH_SHORT).show();
+
+                        // Redirigir a la siguiente Activity
+                        Intent intent = new Intent(context, Diagnostic.class);
+                        context.startActivity(intent);
+                    });
                 } else {
                     Log.d("OKHttp", "Response Code: " + response.code());
                     Log.d("OKHttp", "Response Message: " + response.message());
@@ -183,6 +193,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
             }
         });
     }
+
 
     // Implementar la función de la interfaz OnSymptomListener
     @Override
@@ -204,12 +215,7 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(SymptomsRegister.this, "Error en la búsqueda", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                runOnUiThread(() -> Toast.makeText(SymptomsRegister.this, "Error en la búsqueda", Toast.LENGTH_SHORT).show());
             }
 
             @Override
@@ -218,55 +224,37 @@ public class SymptomsRegister extends AppCompatActivity implements SymptomAdapte
                     String jsonResponse = response.body().string();
                     try {
                         JSONObject jsonObject = new JSONObject(jsonResponse);
-                        if(jsonObject.has("name") && jsonObject.has("lastName")) {
-                            final String name = jsonObject.getString("name");
-                            final String lastName = jsonObject.getString("lastName");
-
-
-                            JSONObject detalle = jsonObject.optJSONObject("Detalle");
+                        JSONObject patientWrapper = jsonObject.optJSONObject("paciente");
+                        if (patientWrapper != null) {
+                            JSONObject detalle = patientWrapper.optJSONObject("detalle");
                             if (detalle != null) {
-                                int idPatient = detalle.optInt("idPatient", -1);
+                                int idPatient = detalle.optInt("id", -1);
+
+
                                 SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("idPatient", idPatient);
+                                editor.putInt("id", idPatient);
                                 editor.apply();
-                            }
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    patientNameEditText.setText(name + " " + lastName);
-                                }
-                            });
+                                String name = patientWrapper.optJSONObject("paciente").optString("name", "");
+                                String lastName = patientWrapper.optJSONObject("paciente").optString("lastName", "");
+                                final String fullName = name + " " + lastName;
+
+                                runOnUiThread(() -> patientNameEditText.setText(fullName));
+                            } else {
+                                runOnUiThread(() -> Toast.makeText(SymptomsRegister.this, "Detalle no encontrado", Toast.LENGTH_SHORT).show());
+                            }
                         } else {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(SymptomsRegister.this, "Paciente no encontrado", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            runOnUiThread(() -> Toast.makeText(SymptomsRegister.this, "Paciente no encontrado", Toast.LENGTH_SHORT).show());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(SymptomsRegister.this, "Paciente no encontrado", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        runOnUiThread(() -> Toast.makeText(SymptomsRegister.this, "Error en el formato del JSON", Toast.LENGTH_SHORT).show());
                     }
-
                 } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(SymptomsRegister.this, "Paciente no encontrado", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    runOnUiThread(() -> Toast.makeText(SymptomsRegister.this, "Paciente no encontrado", Toast.LENGTH_SHORT).show());
                 }
             }
         });
-
-
     }
 }
